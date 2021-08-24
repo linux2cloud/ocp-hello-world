@@ -7,5 +7,7 @@ RUN chown -R apache:apache /etc/httpd/logs/ && \
 USER apache
 EXPOSE 80
 COPY index.html /var/www/html/
-CMD ["httpd", "-D", "FOREGROUND"]
+COPY run.sh run.sh
+RUN chmod 755 run.sh
+CMD ["./run.sh"]
 
