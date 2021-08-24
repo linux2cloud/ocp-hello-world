@@ -1,27 +1,12 @@
-FROM docker.io/centos:latest
+FROM docker.io/mysql:latest
 
 MAINTAINER Linux2Cloud \
 
            info@linux2cloud.com
 
-RUN yum install httpd -y
+ENV MYSQL_USER user1 \
+    MYSQL_PASSWORD redhat123 \
+    MYSQL_DATABASE testdb \
+    MYSQL_ROOT_PASSWORD redhatroot123
 
-ENV PORT 8081
-
-RUN sed -i -e "/^Listen 80/c\Listen ${PORT}" /etc/httpd/conf/httpd.conf && \
-
-    chown -R apache:apache /etc/httpd/logs/ && \
-
-    chown -R apache:apache /run/httpd/
-
-USER apache
-
-EXPOSE ${PORT}
-
-COPY index.html /var/www/html/
-
-COPY run.sh run.sh
-
-RUN chmod 755 run.sh
-
-CMD ["./run.sh"]
+EXPOSE 3306
